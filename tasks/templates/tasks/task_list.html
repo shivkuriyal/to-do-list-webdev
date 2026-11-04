@@ -1,0 +1,78 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}All Tasks - My To-Do List{% endblock %}
+
+{% block content %}
+<div class="section-header">
+  <h1 class="page-title">All Tasks</h1>
+  {% if tasks %}
+  <div class="task-stats">
+    <span class="stat-badge">Total: {{ total_count }}</span>
+    <span class="stat-badge" style="color: var(--color-success);">Done: {{ completed_count }}</span>
+    <span class="stat-badge" style="color: var(--color-primary);">Pending: {{ pending_count }}</span>
+  </div>
+  {% endif %}
+</div>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="tasks-table">
+      <thead>
+        <tr>
+          <th style="width: 25%;">Title</th>
+          <th style="width: 35%;">Description</th>
+          <th style="width: 10%; text-align: center;">Done</th>
+          <th style="width: 15%;">Created</th>
+          <th style="width: 15%; text-align: center;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in tasks %}
+        <tr class="task-row {% if task.completed %}is-completed{% endif %}">
+          <td>
+            <span class="task-title">{{ task.title }}</span>
+          </td>
+          <td>
+            {% if task.description %}
+              <span class="task-desc">{{ task.description }}</span>
+            {% else %}
+              <span class="task-desc" style="color: var(--text-light); font-style: italic;">No description</span>
+            {% endif %}
+          </td>
+          <td style="text-align: center;">
+            <a href="{% url 'task_toggle' task.pk %}"
+               class="status-toggle-btn {% if task.completed %}checked{% endif %}"
+               title="Click to toggle status">
+              {% if task.completed %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              {% endif %}
+            </a>
+          </td>
+          <td class="created-col">
+            {{ task.created_at|date:"Y-m-d H:i" }}
+          </td>
+          <td style="text-align: center;">
+            <div class="actions-group" style="justify-content: center;">
+              <a href="{% url 'task_update' task.pk %}" class="btn btn-edit" title="Edit Task">Edit</a>
+              <a href="{% url 'task_delete' task.pk %}" class="btn btn-delete" title="Delete Task">Delete</a>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5">
+            <div class="empty-state">
+              <p>No tasks yet.</p>
+              <a href="{% url 'task_create' %}" class="btn btn-primary">Create Your First Task</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

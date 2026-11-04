@@ -1,0 +1,48 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}{{ action }} Task - My To-Do List{% endblock %}
+
+{% block content %}
+<div class="form-card">
+  <h1 class="page-title" style="margin-bottom: 1.5rem;">{{ action }} Task</h1>
+
+  <form method="POST" novalidate>
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+      {{ form.title }}
+      {% if form.title.errors %}
+        <div style="color: var(--color-delete); font-size: 0.85rem; margin-top: 0.3rem;">
+          {{ form.title.errors.0 }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+      {{ form.description }}
+      {% if form.description.errors %}
+        <div style="color: var(--color-delete); font-size: 0.85rem; margin-top: 0.3rem;">
+          {{ form.description.errors.0 }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if form.completed %}
+    <div class="form-group">
+      <label class="form-checkbox-label" for="{{ form.completed.id_for_label }}">
+        {{ form.completed }}
+        <span>Mark as completed</span>
+      </label>
+    </div>
+    {% endif %}
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a href="{% url 'task_list' %}" class="btn btn-cancel">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
+

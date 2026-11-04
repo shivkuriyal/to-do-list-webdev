@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}My To-Do List{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="{% url 'task_list' %}" class="brand">
+        <span class="brand-icon">✓</span>
+        <span>Todo App</span>
+      </a>
+      <a href="{% url 'task_create' %}" class="btn btn-primary">Add Task</a>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="container">
+    {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- Minimalist Footer -->
+  <footer class="footer">
+    <p>&copy; {% now "Y" %} My To-Do List &bull; Built with Django, HTML &amp; CSS</p>
+  </footer>
+
+</body>
+</html>
+
