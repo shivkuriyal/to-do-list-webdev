@@ -8,9 +8,17 @@ https://docs.djangoproject.com/en/6.1/howto/deployment/wsgi/
 """
 
 import os
-
+import sys
 from django.core.wsgi import get_wsgi_application
+
+# Ensure project root is in sys.path
+path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if path not in sys.path:
+    sys.path.append(path)
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'todoproject.settings')
 
 application = get_wsgi_application()
+
+# Alias for Vercel serverless functions
+app = application

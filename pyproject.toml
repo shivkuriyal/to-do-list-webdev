@@ -1,0 +1,13 @@
+[project]
+name = "todoproject"
+version = "0.1.0"
+description = "A minimalist To-Do List web application using Django"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "django>=5.0",
+    "whitenoise>=6.0",
+]
+
+[tool.vercel]
+entrypoint = "todoproject/wsgi.py"
