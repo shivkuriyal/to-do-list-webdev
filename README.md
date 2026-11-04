@@ -95,6 +95,22 @@ Open your browser and navigate to:
 
 ---
 
+## 🌐 Deployment (Render & Vercel)
+
+### Deploying on Render
+
+1. Create a new **Web Service** on [Render](https://render.com/).
+2. Connect your GitHub repository (`shivkuriyal/to-do-list-webdev`).
+3. Set the following configuration in the Render dashboard:
+   - **Runtime**: `Python`
+   - **Build Command**: `./build.sh`
+   - **Start Command**: `gunicorn todoproject.wsgi:application`
+4. Click **Deploy Web Service**.
+
+*(Alternatively, connect the repo as a **Blueprint** and Render will automatically read `render.yaml`)*.
+
+---
+
 ## 🧪 Running Automated Tests
 
 Run the full suite of unit and integration tests:
